@@ -7,9 +7,9 @@ class Secretarias(db.Model):
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.usuario'))
     
-    def __init__(self, cedulaSecre, nombreSecre):
-        self.cedulaSecre = cedulaSecre 
-        self.nombreSecre = nombreSecre
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
 
 class SecretariasSchema(ma.Schema):
     class Meta:

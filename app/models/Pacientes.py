@@ -5,15 +5,14 @@ class Pacientes(db.Model):
     cedula = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(30))
     apellidos = db.Column(db.String(45))
-    citas = relationship("citas", back_populates="pacientes")
-    oferta = relationship("ofertas", back_populates="pacientes")
+    citas = relationship("Citas", backref="pacientes")
+    oferta = relationship("Ofertas", backref="pacientes")
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.usuario'))
     
-    def __init__(self, cedula, nombre, apellidos):
-        self.cedula = cedula 
-        self.nombre = nombre
-        self.apeliidos = apellidos
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
 
 class PacientesSchema(ma.Schema):
     class Meta:

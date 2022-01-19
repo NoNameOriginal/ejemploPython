@@ -11,12 +11,9 @@ class Ofertas(db.Model):
     citas_id = db.Column(db.Integer, ForeignKey('citas.id'))
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     
-    def __init__(self, idoferta, precio, zona, inicio, fin ):
-        self.idoferta = idoferta 
-        self.precio = precio
-        self.zona = zona 
-        self.inicio = inicio
-        self.fin = fin
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
 
 class OfertasSchema(ma.Schema):
     class Meta:

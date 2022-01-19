@@ -7,17 +7,14 @@ class Citas(db.Model):
     hora = db.Column(db.Time)
     zona = db.Column(db.String(30))
     duracion = db.Column(db.Time)
-    oferta = relationship("ofertas", back_populates="citas")
+    oferta = relationship("Ofertas", backref="citas")
     enfermeras_tarjetaProfesional = db.Column(db.Integer, ForeignKey('enfermeras.tarjetaProfesional'))
     paciente_cedula = db.Column(db.Integer, ForeignKey('pacientes.cedula'))
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
 
-    def __init__(self, idcitas, dia, hora, zona, duracion ):
-        self.idcitas = idcitas 
-        self.dia = dia
-        self.hora = hora
-        self.zona = zona
-        self.duracion = duracion
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
 
 class CitasSchema(ma.Schema):
     class Meta:

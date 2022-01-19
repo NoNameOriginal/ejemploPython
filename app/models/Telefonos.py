@@ -5,10 +5,10 @@ class Telefonos(db.Model):
     telefono = db.Column(db.Integer, primary_key=True)
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     
-    def __init__(self, telefonos, sede_id):
-        self.telefonos = telefonos 
-        self.sede_id = sede_id
-    
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
+
 class TelefonosSchema(ma.Schema):
     class Meta:
         fields = ('telefonos', 'sede_id')

@@ -7,17 +7,15 @@ class Sedes(db.Model):
     local = db.Column(db.Integer)
     horarioApertura = db.Column(db.Time)
     horarioCierre = db.Column(db.Time)
-    telefonos = relationship("telefonos", back_populates="sede")
-    secretaria = relationship("secretarias", back_populates="sede")
-    enfermeras = relationship("enfermeras", back_populates="sede")
-    citas = relationship("citas", back_populates="sede")
-    oferta = relationship("ofertas", back_populates="sede")
+    telefonos = relationship("Telefonos", backref="sede")
+    secretaria = relationship("Secretarias", backref="sede")
+    enfermeras = relationship("Enfermeras", backref="sede")
+    citas = relationship("Citas", backref="sede")
+    oferta = relationship("Ofertas", backref="sede")
     
-    def __init__(self, centroComercial, local, horarioApertura,horarioCierre):
-        self.centroComercial = centroComercial
-        self.local = local
-        self.horarioApertura = horarioApertura
-        self.horarioCierre = horarioCierre
+    def __init__(self, datadict ):
+        for key, value in datadict.items():
+            setattr(self, key, value)
 
 class SedesSchema(ma.Schema):
     class Meta:
