@@ -5,7 +5,7 @@ class Secretarias(db.Model):
     cedula = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(30))
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
-    cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.usuario'))
+    cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.cedula'))
     
     def __init__(self, datadict ):
         for key, value in datadict.items():

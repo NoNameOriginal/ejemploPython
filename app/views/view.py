@@ -5,7 +5,7 @@ from .ManejadorDeBaseDeDatos import *
 
 CITAS="CITAS"
 CUENTAS="CUENTAS"
-ENFEREMERAS="ENFEREMERAS"
+ENFERMERAS="ENFERMERAS"
 OFERTAS="OFERTAS"
 PACIENTES="PACIENTES"
 SECRETARIAS="SECRETARIAS"
@@ -26,9 +26,32 @@ def obtener_modelo(tabla):
         modelo = Cuentas.Cuentas
         modelo_esquema = Cuentas.CuentasSchema()
         modelos_esquema = Cuentas.CuentasSchema(many=True)
+    if(tabla==ENFERMERAS):
+        modelo = Enfermeras.Enfermeras
+        modelo_esquema = Enfermeras.EnfermerasSchema()
+        modelos_esquema = Enfermeras.EnfermerasSchema(many=True)
+    if(tabla==OFERTAS):
+        modelo = Ofertas.Ofertas
+        modelo_esquema = Ofertas.OfertasSchema()
+        modelos_esquema = Ofertas.OfertasSchema(many=True)
+    if(tabla==PACIENTES):
+        modelo = Pacientes.Pacientes
+        modelo_esquema = Pacientes.PacientesSchema()
+        modelos_esquema = Pacientes.PacientesSchema(many=True)
+    if(tabla==SECRETARIAS):
+        modelo = Secretarias.Secretarias
+        modelo_esquema = Secretarias.SecretariasSchema()
+        modelos_esquema = Secretarias.SecretariasSchema(many=True)
+    if(tabla==SEDES):
+        modelo = Sedes.Sedes
+        modelo_esquema = Sedes.SedessSchema()
+        modelos_esquema = Sedes.SedesSchema(many=True)
+    if(tabla==TELEFONOS):
+        modelo = Telefonos.Telefonos
+        modelo_esquema = Telefonos.TelefonossSchema()
+        modelos_esquema = Telefonos.TelefonosSchema(many=True)
     
     return modelo, modelo_esquema, modelos_esquema
-
 # @app.route('/')
 # def home_page():
 #     allUsers = User.User.query.all()

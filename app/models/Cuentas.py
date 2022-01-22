@@ -2,8 +2,8 @@ from . import *
 
 class Cuentas(db.Model):
     __tablename__ = 'cuentas'
-    usuario = db.Column(db.Integer, primary_key=True)
-    contraseña = db.Column(db.Integer)
+    cedula = db.Column(db.Integer, primary_key=True)
+    contrasegna = db.Column(db.Integer)
     secretaria = relationship("Secretarias", backref="cuenta")
     paciente = relationship("Pacientes", backref="cuenta")
     
@@ -13,5 +13,5 @@ class Cuentas(db.Model):
     
 class CuentasSchema(ma.Schema):
     class Meta:
-        fields = ('usuario', 'contraseña')
+        fields = ('cedula', 'contrasegna')
         

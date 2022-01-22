@@ -8,7 +8,7 @@ class Pacientes(db.Model):
     citas = relationship("Citas", backref="pacientes")
     oferta = relationship("Ofertas", backref="pacientes")
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
-    cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.usuario'))
+    cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.cedula'))
     
     def __init__(self, datadict ):
         for key, value in datadict.items():

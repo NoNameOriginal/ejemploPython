@@ -3,7 +3,7 @@ from . import *
 class Citas(db.Model):
     __tablename__ = 'citas'
     id = db.Column(db.Integer, primary_key=True)
-    dia = db.Column(db.Date)
+    fecha = db.Column(db.Date)
     hora = db.Column(db.Time)
     zona = db.Column(db.String(30))
     duracion = db.Column(db.Time)
@@ -18,4 +18,4 @@ class Citas(db.Model):
 
 class CitasSchema(ma.Schema):
     class Meta:
-        fields = ('dia', 'hora', 'zona', 'duracion')
+        fields = ('fecha', 'hora', 'zona', 'duracion')
