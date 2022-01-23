@@ -56,7 +56,18 @@ def obtener_modelo(tabla):
 # def home_page():
 #     allUsers = User.User.query.all()
 #     result = users_schema.dump(allUsers)
-#     return render_template('home.html', data=result)
+#     return render_template('index.html', data=result)
+@app.route("../templates/clientes.html")
+def index():
+    from flask import redirect
+    return redirect("../templates/clientes.html")
+@app.route("../templates/clientes.html")
+def login():
+    args = request.form
+    if args['cedula'] == 'cedula' and args['contrasegna'] == 'contrasegna':
+        return "¡Inicio de sesión correcto!"
+    else:
+        return "¡Error de inicio de sesion!"
 
 @app.route('/modelos', methods=['POST'])
 def create_user():
