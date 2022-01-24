@@ -52,22 +52,49 @@ def obtener_modelo(tabla):
         modelos_esquema = Telefonos.TelefonosSchema(many=True)
     
     return modelo, modelo_esquema, modelos_esquema
-# @app.route('/')
-# def home_page():
-#     allUsers = User.User.query.all()
-#     result = users_schema.dump(allUsers)
-#     return render_template('index.html', data=result)
-@app.route("../templates/clientes.html")
-def index():
-    from flask import redirect
-    return redirect("../templates/clientes.html")
-@app.route("../templates/clientes.html")
-def login():
-    args = request.form
-    if args['cedula'] == 'cedula' and args['contrasegna'] == 'contrasegna':
-        return "¡Inicio de sesión correcto!"
-    else:
-        return "¡Error de inicio de sesion!"
+
+@app.route('/')
+def pagina_de_inicio():
+    return render_template('index.html')
+
+@app.route('/clientes')
+def pagina_de_cliente():
+    return render_template('clientes.html')
+
+@app.route('/secretarias')
+def pagina_de_secretaria():
+    return render_template('secretarias.html')
+
+@app.route('/login_cliente', methods=['POST'])
+def login_cliente():
+
+    cedula = request.form['cedula']
+    contraseña = request.form['contraseña']
+
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CUENTAS)
+    informacion = obtener_fila(modelo, modelo_esquema, cedula)
+
+    if(informacion is None):
+        return render_template('clientes.html', error="Usuario no encontrado", isLogged=False)
+
+    if(str(contraseña) == str(informacion.contrasegna)):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+        citas = obtener_filas(modelo, modelos_esquemas)
+        return render_template('clientes.html', citas=citas, isLogged=True)
+
+    return render_template('clientes.html', error="Contraseña incorrecta", isLogged=False)
+
+# @app.route("../templates/clientes.html")
+# def index():
+#     from flask import redirect
+#     return redirect("../templates/clientes.html")
+# @app.route("../templates/clientes.html")
+# def login():
+#     args = request.form
+#     if args['cedula'] == 'cedula' and args['contrasegna'] == 'contrasegna':
+#         return "¡Inicio de sesión correcto!"
+#     else:
+#         return "¡Error de inicio de sesion!"
 
 @app.route('/modelos', methods=['POST'])
 def create_user():

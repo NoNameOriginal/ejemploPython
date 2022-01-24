@@ -12,11 +12,11 @@ def crear_fila(Modelo, ModeloSchema, DictParam):
 def obtener_filas(Modelo, ModeloSchema):
     todas_las_filas = Modelo.query.all()
     result = ModeloSchema.dump(todas_las_filas)
-    return jsonify(result)
+    return result
 
 def obtener_fila(Modelo, ModeloSchema, id):
     fila = Modelo.query.get(id)
-    return ModeloSchema.jsonify(fila)
+    return fila
 
 def actualizar_fila(Modelo, ModeloSchema, DictParam,id):
     fila = Modelo.query.get(id)
