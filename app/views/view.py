@@ -84,17 +84,52 @@ def login_cliente():
 
     return render_template('clientes.html', error="Contraseña incorrecta", isLogged=False)
 
-# @app.route("../templates/clientes.html")
-# def index():
-#     from flask import redirect
-#     return redirect("../templates/clientes.html")
-# @app.route("../templates/clientes.html")
-# def login():
-#     args = request.form
-#     if args['cedula'] == 'cedula' and args['contrasegna'] == 'contrasegna':
-#         return "¡Inicio de sesión correcto!"
-#     else:
-#         return "¡Error de inicio de sesion!"
+@app.route('/login_secretaria', methods=['POST'])
+def login_secretaria():
+
+    cedula = request.form['cedula']
+    contraseña = request.form['contraseña']
+
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CUENTAS)
+    informacion = obtener_fila(modelo, modelo_esquema, cedula)
+
+    if(informacion is None):
+        return render_template('secretarias.html', error="Usuario no encontrado", isLogged=False)
+
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+        citas = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', citas=citas, isLogged=True)
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
+        enfermeras = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', enfermeras=enfermeras, isLogged=True)
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
+        ofertas = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', ofertas=ofertas, isLogged=True)
+    
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
+        pacientes = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', pacientes=pacientes, isLogged=True)
+    
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
+        secretarias = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', secretarias=secretarias, isLogged=True)
+    
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
+        sedes = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', sedes=sedes, isLogged=True)
+    
+    if(contraseña == informacion.contrasegna):
+        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
+        telefonos = obtener_filas(modelo, modelos_esquemas)
+        return render_template('secretarias.html', telefonos=telefonos, isLogged=True)
+
+    return render_template('secretarias.html', error="Contraseña incorrecta", isLogged=False)
 
 @app.route('/modelos', methods=['POST'])
 def create_user():
