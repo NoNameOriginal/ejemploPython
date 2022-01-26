@@ -1,3 +1,4 @@
+from pickletools import read_uint1
 from .. import db, app
 from flask import render_template, request, jsonify
 from ..models import Citas, Cuentas, Enfermeras, Ofertas, Pacientes, Secretarias, Sedes, Telefonos
@@ -44,11 +45,11 @@ def obtener_modelo(tabla):
         modelos_esquema = Secretarias.SecretariasSchema(many=True)
     if(tabla==SEDES):
         modelo = Sedes.Sedes
-        modelo_esquema = Sedes.SedessSchema()
+        modelo_esquema = Sedes.SedesSchema()
         modelos_esquema = Sedes.SedesSchema(many=True)
     if(tabla==TELEFONOS):
         modelo = Telefonos.Telefonos
-        modelo_esquema = Telefonos.TelefonossSchema()
+        modelo_esquema = Telefonos.TelefonosSchema()
         modelos_esquema = Telefonos.TelefonosSchema(many=True)
     
     return modelo, modelo_esquema, modelos_esquema
@@ -96,40 +97,60 @@ def login_secretaria():
     if(informacion is None):
         return render_template('secretarias.html', error="Usuario no encontrado", isLogged=False)
 
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
-        citas = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', citas=citas, isLogged=True)
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
-        enfermeras = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', enfermeras=enfermeras, isLogged=True)
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
-        ofertas = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', ofertas=ofertas, isLogged=True)
-    
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
-        pacientes = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', pacientes=pacientes, isLogged=True)
-    
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
-        secretarias = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', secretarias=secretarias, isLogged=True)
-    
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
-        sedes = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', sedes=sedes, isLogged=True)
-    
-    if(contraseña == informacion.contrasegna):
-        modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
-        telefonos = obtener_filas(modelo, modelos_esquemas)
-        return render_template('secretarias.html', telefonos=telefonos, isLogged=True)
+    if(str(contraseña) != str(informacion.contrasegna)):
+        return render_template('secretarias.html', error="Contraseña incorrecta", isLogged=False)
 
-    return render_template('secretarias.html', error="Contraseña incorrecta", isLogged=False)
+    return renderizar_tablas_secretaria()
+
+def renderizar_tablas_secretaria():
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    citas = obtener_filas(modelo, modelos_esquemas)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
+    enfermeras = obtener_filas(modelo, modelos_esquemas)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
+    ofertas = obtener_filas(modelo, modelos_esquemas)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
+    pacientes = obtener_filas(modelo, modelos_esquemas)
+    print(pacientes)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
+    secretarias = obtener_filas(modelo, modelos_esquemas)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
+    sedes = obtener_filas(modelo, modelos_esquemas)
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
+    telefonos = obtener_filas(modelo, modelos_esquemas)
+    return render_template('secretarias.html', 
+                            citas=citas, 
+                            enfermeras=enfermeras,
+                            ofertas=ofertas,
+                            pacientes=pacientes,
+                            secretarias=secretarias,
+                            sedes=sedes,
+                            telefonos=telefonos,
+                            isLogged=True)
+
+@app.route('/actualizar_paciente', methods=['POST'])
+def actualizar_paciente():
+
+    datos = {}
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    apellidos = request.form['apellidos']
+    datos["nombre"] = nombre
+    datos["apellidos"] = apellidos
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_paciente', methods=['POST'])
+def borrar_paciente():
+
+    cedula = request.form['cedula']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
+    eliminar_fila(modelo, modelo_esquema, cedula)
+
+    return renderizar_tablas_secretaria()
+
 
 @app.route('/modelos', methods=['POST'])
 def create_user():
@@ -140,7 +161,6 @@ def create_user():
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(tabla)
 
     return crear_fila(modelo, modelo_esquema, dict(datos))
-
 
 @app.route('/modelos', methods=['GET'])
 def get_users():
