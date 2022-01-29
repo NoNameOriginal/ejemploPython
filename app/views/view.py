@@ -127,6 +127,59 @@ def renderizar_tablas_secretaria():
                             sedes=sedes,
                             telefonos=telefonos,
                             isLogged=True)
+    
+    
+@app.route('/actualizar_cita', methods=['POST'])
+def actualizar_cita():
+
+    datos = {}
+    id = request.form['id']
+    fecha = request.form['fecha']
+    hora = request.form['hora']
+    zona = request.form['zona']
+    duracion = request.form['duracion']
+    datos["fecha"] = fecha
+    datos["hora"] = hora
+    datos["zona"] = zona
+    datos["duracion"] = duracion
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/actualizar_enfermera', methods=['POST'])
+def actualizar_enfermera():
+
+    datos = {}
+    tarjetaProfesional = request.form['tarjetaProfesional']
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    sede_id = request.form['sede_id']
+    datos["tarjetaProfesional"] = tarjetaProfesional
+    datos["nombre"] = nombre
+    datos["sede_id"] = sede_id
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/actualizar_oferta', methods=['POST'])
+def actualizar_oferta():
+
+    datos = {}
+    id = request.form['id']
+    precio = request.form['precio']
+    zona = request.form['zona']
+    inicio = request.form['inicio']
+    fin = request.form['fin']
+    datos["precio"] = precio
+    datos["zona"] = zona
+    datos["inicio"] = inicio
+    datos["fin"] = fin
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+
+    return renderizar_tablas_secretaria()
 
 @app.route('/actualizar_paciente', methods=['POST'])
 def actualizar_paciente():
@@ -135,10 +188,84 @@ def actualizar_paciente():
     cedula = request.form['cedula']
     nombre = request.form['nombre']
     apellidos = request.form['apellidos']
+    sede_id = request.form['sede_id']
     datos["nombre"] = nombre
     datos["apellidos"] = apellidos
+    datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
     actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/actualizar_secretaria', methods=['POST'])
+def actualizar_secretaria():
+
+    datos = {}
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    sede_id = request.form['sede_id']
+    datos["nombre"] = nombre
+    datos["sede_id"] = sede_id
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/actualizar_sede', methods=['POST'])
+def actualizar_sede():
+
+    datos = {}
+    id = request.form['id']
+    centroComercial = request.form['centroComercial']
+    local = request.form['local']
+    horarioApertura = request.form['horarioApertura']
+    horarioCierre = request.form['horarioCierre']
+    datos["centroComercial"] = centroComercial
+    datos["local"] = local
+    datos["horarioApertura"] = horarioApertura
+    datos["horarioCierre"] = horarioCierre
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/actualizar_telefono', methods=['POST'])
+def actualizar_telefono():
+
+    datos = {}
+    telefono = request.form['telefono']
+    sede_id = request.form['sede_id']
+    datos["telefono"] = telefono
+    datos["sede_id"] = sede_id
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_cita', methods=['POST'])
+def borrar_cita():
+
+    id = request.form['id']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    eliminar_fila(modelo, modelo_esquema, id)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_enfermera', methods=['POST'])
+def borrar_enfermera():
+
+    cedula = request.form['cedula']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
+    eliminar_fila(modelo, modelo_esquema, cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_oferta', methods=['POST'])
+def borrar_oferta():
+
+    id = request.form['id']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
+    eliminar_fila(modelo, modelo_esquema, id)
 
     return renderizar_tablas_secretaria()
 
@@ -151,6 +278,32 @@ def borrar_paciente():
 
     return renderizar_tablas_secretaria()
 
+@app.route('/borrar_secretaria', methods=['POST'])
+def borrar_scretaria():
+
+    cedula = request.form['cedula']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
+    eliminar_fila(modelo, modelo_esquema, cedula)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_sede', methods=['POST'])
+def borrar_sede():
+
+    id = request.form['id']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
+    eliminar_fila(modelo, modelo_esquema, id)
+
+    return renderizar_tablas_secretaria()
+
+@app.route('/borrar_telefono', methods=['POST'])
+def borrar_telefono():
+
+    id = request.form['id']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
+    eliminar_fila(modelo, modelo_esquema, id)
+
+    return renderizar_tablas_secretaria()
 
 @app.route('/modelos', methods=['POST'])
 def create_user():

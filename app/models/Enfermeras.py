@@ -14,4 +14,4 @@ class Enfermeras(db.Model):
 
 class EnfermerasSchema(ma.Schema):
     class Meta:
-        fields = ('tarjetaProfesional', 'cedulaEnfer', 'nombre')
+        fields = ('tarjetaProfesional', 'cedula', 'nombre', 'sede_id')
