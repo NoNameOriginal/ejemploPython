@@ -13,4 +13,4 @@ class Secretarias(db.Model):
 
 class SecretariasSchema(ma.Schema):
     class Meta:
-        fields = ('cedula', 'nombre''sede_id')
+        fields = ('cedula', 'nombre','sede_id')

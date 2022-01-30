@@ -63,7 +63,25 @@ body{
     text-align: center;
     color: #C9CBFF;
 }
+/* Forms*/
+#form-login {
+    text-align: center;
+}
+.Title-login {
+    color: black;
+}
 
+/*Table*/
+h3 {
+    color: black;
+    font-family:'Dancing Script', cursive;
+    background-color: #c9cbffb7;
+    text-align: center;
+}
+/*button*/
+.mdc-fab {
+    background-color: #7f83ebef;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

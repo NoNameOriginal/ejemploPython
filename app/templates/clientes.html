@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Clientes</title>
 </head>
 <nav>
     <ul id="main-nav" class="nav">
@@ -19,7 +22,10 @@
 </nav>
 <body>
     <form action="/login_cliente" method="POST">
+      <h3>Inicio de sesión</h3>
+       <label class="Title-login">Digite su cédula: </label><br>
         <input type="int" placeholder="Ingrese su cedula" id="cedula" name="cedula"><br>
+       <label class="Title-login">Digite su contraseña:</label><br>
         <input type="int" placeholder="Ingrese su contraseña" id="contraseña" name="contraseña"><br>
         <input type="submit" value="Ingresar">
     </form>
@@ -31,12 +37,15 @@
     {% if citas %}
     <table class="mdc-data-table__table" aria-label="Dessert calories">
         <thead>
+          <h3>Citas</h3>  
           <tr class="mdc-data-table__header-row">
             <th class="mdc-data-table__header-cell" role="columnheader" scope="col">ID</th>
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Fecha</th>
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Hora</th>
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Zona</th>
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Duración</th>
+            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Editar</th>
+        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Eliminar</th>
           </tr>
         </thead>
         <tbody class="mdc-data-table__content">
@@ -47,10 +56,107 @@
                     <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.hora}}</td>
                     <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.zona}}</td>
                     <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.duracion}}</td>
+
+                    <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
+                        <div class="mdc-touch-target-wrapper">
+                          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" onclick="editar_telefono({{item}})">
+                            <div class="mdc-fab__ripple"></div>
+                            <span class="material-icons mdc-fab__icon">edit</span>
+                            <div class="mdc-fab__touch"></div>
+                          </button>
+                        </div>
+                      </td>
+                      <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
+                        <div class="mdc-touch-target-wrapper">
+                          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" onclick="eliminar_telefono({{item.sede_id}})">
+                            <div class="mdc-fab__ripple"></div>
+                            <span class="material-icons mdc-fab__icon">delete</span>
+                            <div class="mdc-fab__touch"></div>
+                          </button>
+                        </div>
+                      </td>
                 </tr>
             {% endfor %}
         </tbody>
       </table>
       {% endif %}
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Citas-->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form name="myForm" action="/actualizar_cita" method="POST">
+        <input type="hidden" id="id" name="id" value="id">
+        <label class="mdc-text-field mdc-text-field--filled">Fecha
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="date" aria-labelledby="my-label-id" id="fecha" name="fecha"
+           placeholder="Fecha">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled">Hora
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="time" aria-labelledby="my-label-id" id="hora" name="hora"
+          placeholder="Hora">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled">Zona
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="zona" name="zona"
+          placeholder="Zona">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled">Duración
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="time" aria-labelledby="my-label-id" id="duracion" name="duracion"
+          placeholder="Fin">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <div class="mdc-touch-target-wrapper">
+          <button class="mdc-fab mdc-fab--mini mdc-fab--touch">
+            <div class="mdc-fab__ripple"></div>
+            <span class="material-icons mdc-fab__icon">send</span>
+            <div class="mdc-fab__touch"></div>
+          </button>
+        </div>
+      </form>
+    </div>
+<!--Borrado de tablas-->
+<form action="/borrar_cita" method="POST" id="borrarCita" name="borrarCita">
+    <input type="hidden" name="id" id="id"></form>
 </body>
 </html>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementsByClassName("myBtn");
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    function editar_cita(data) {
+      document.myForm.id.value = data.id;
+      document.myForm.fecha.value = data.fecha;
+      document.myForm.hora.value = data.hora;
+      document.myForm.zona.value = data.zona;
+      document.myForm.duracion.value = data.duracion;
+      modal.style.display = "block";
+    }
+    window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
