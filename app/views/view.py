@@ -111,7 +111,6 @@ def renderizar_tablas_secretaria():
     ofertas = obtener_filas(modelo, modelos_esquemas)
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
     pacientes = obtener_filas(modelo, modelos_esquemas)
-    print(pacientes)
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
     secretarias = obtener_filas(modelo, modelos_esquemas)
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
@@ -127,10 +126,34 @@ def renderizar_tablas_secretaria():
                             sedes=sedes,
                             telefonos=telefonos,
                             isLogged=True)
-    
+
+def renderizar_tablas_clientes():
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    citas = obtener_filas(modelo, modelos_esquemas)
+    return render_template('clientes.html', 
+                            citas=citas)
     
 @app.route('/actualizar_cita', methods=['POST'])
 def actualizar_cita():
+
+    datos = {}
+    id = request.form['id']
+    fecha = request.form['fecha']
+    hora = request.form['hora']
+    zona = request.form['zona']
+    duracion = request.form['duracion']
+    print(fecha)
+    datos["fecha"] = fecha
+    datos["hora"] = hora
+    datos["zona"] = zona
+    datos["duracion"] = duracion
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+
+    return renderizar_tablas_clientes()
+
+@app.route('/actualizar_cita_secretaria', methods=['POST'])
+def actualizar_cita_secretaria():
 
     datos = {}
     id = request.form['id']
@@ -159,7 +182,7 @@ def actualizar_enfermera():
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), tarjetaProfesional)
 
     return renderizar_tablas_secretaria()
 
