@@ -142,13 +142,15 @@ def actualizar_cita():
     hora = request.form['hora']
     zona = request.form['zona']
     duracion = request.form['duracion']
-    print(fecha)
     datos["fecha"] = fecha
     datos["hora"] = hora
     datos["zona"] = zona
     datos["duracion"] = duracion
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_clientes()
 
@@ -256,12 +258,13 @@ def actualizar_sede():
 def actualizar_telefono():
 
     datos = {}
+    telefonoAnterior = request.form['telefonoAnterior']
     telefono = request.form['telefono']
     sede_id = request.form['sede_id']
     datos["telefono"] = telefono
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), telefonoAnterior)
 
     return renderizar_tablas_secretaria()
 
@@ -322,7 +325,7 @@ def borrar_sede():
 @app.route('/borrar_telefono', methods=['POST'])
 def borrar_telefono():
 
-    id = request.form['id']
+    id = request.form['telefono']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
     eliminar_fila(modelo, modelo_esquema, id)
 

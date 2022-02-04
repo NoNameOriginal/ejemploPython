@@ -11,4 +11,4 @@ class Telefonos(db.Model):
 
 class TelefonosSchema(ma.Schema):
     class Meta:
-        fields = ('telefonos', 'sede_id')
+        fields = ('telefono', 'sede_id')
