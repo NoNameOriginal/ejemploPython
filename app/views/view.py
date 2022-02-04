@@ -322,9 +322,9 @@ def borrar_sede():
 @app.route('/borrar_telefono', methods=['POST'])
 def borrar_telefono():
 
-    id = request.form['id']
+    telefono = request.form['telefono']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
-    eliminar_fila(modelo, modelo_esquema, id)
+    eliminar_fila(modelo, modelo_esquema, telefono)
 
     return renderizar_tablas_secretaria()
 
