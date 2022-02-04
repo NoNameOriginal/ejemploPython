@@ -2,7 +2,8 @@ from . import *
                
 class Pacientes(db.Model):
     __tablename__ = 'pacientes'
-    cedula = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    cedula = db.Column(db.Integer)
     nombre = db.Column(db.String(30))
     apellidos = db.Column(db.String(45))
     citas = relationship("Citas", backref="pacientes")
@@ -16,4 +17,4 @@ class Pacientes(db.Model):
 
 class PacientesSchema(ma.Schema):
     class Meta:
-        fields = ('cedula', 'nombre', 'apellidos','sede_id')
+        fields = ('id','cedula', 'nombre', 'apellidos','sede_id')

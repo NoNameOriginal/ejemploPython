@@ -142,13 +142,15 @@ def actualizar_cita():
     hora = request.form['hora']
     zona = request.form['zona']
     duracion = request.form['duracion']
-    print(fecha)
     datos["fecha"] = fecha
     datos["hora"] = hora
     datos["zona"] = zona
     datos["duracion"] = duracion
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_clientes()
 
@@ -174,6 +176,7 @@ def actualizar_cita_secretaria():
 def actualizar_enfermera():
 
     datos = {}
+    id = request.form['id']
     tarjetaProfesional = request.form['tarjetaProfesional']
     cedula = request.form['cedula']
     nombre = request.form['nombre']
@@ -182,7 +185,7 @@ def actualizar_enfermera():
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), tarjetaProfesional)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -208,6 +211,7 @@ def actualizar_oferta():
 def actualizar_paciente():
 
     datos = {}
+    id = request.form['id']
     cedula = request.form['cedula']
     nombre = request.form['nombre']
     apellidos = request.form['apellidos']
@@ -216,7 +220,7 @@ def actualizar_paciente():
     datos["apellidos"] = apellidos
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -224,13 +228,14 @@ def actualizar_paciente():
 def actualizar_secretaria():
 
     datos = {}
+    id = request.form['id']
     cedula = request.form['cedula']
     nombre = request.form['nombre']
     sede_id = request.form['sede_id']
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), cedula)
+    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -256,6 +261,7 @@ def actualizar_sede():
 def actualizar_telefono():
 
     datos = {}
+    id = request.form['id']
     telefono = request.form['telefono']
     sede_id = request.form['sede_id']
     datos["telefono"] = telefono
@@ -277,9 +283,9 @@ def borrar_cita():
 @app.route('/borrar_enfermera', methods=['POST'])
 def borrar_enfermera():
 
-    cedula = request.form['cedula']
+    id = request.form['id']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
-    eliminar_fila(modelo, modelo_esquema, cedula)
+    eliminar_fila(modelo, modelo_esquema, id)
 
     return renderizar_tablas_secretaria()
 
@@ -295,18 +301,18 @@ def borrar_oferta():
 @app.route('/borrar_paciente', methods=['POST'])
 def borrar_paciente():
 
-    cedula = request.form['cedula']
+    id = request.form['id']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
-    eliminar_fila(modelo, modelo_esquema, cedula)
+    eliminar_fila(modelo, modelo_esquema, id)
 
     return renderizar_tablas_secretaria()
 
 @app.route('/borrar_secretaria', methods=['POST'])
 def borrar_scretaria():
 
-    cedula = request.form['cedula']
+    id = request.form['id']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
-    eliminar_fila(modelo, modelo_esquema, cedula)
+    eliminar_fila(modelo, modelo_esquema, id)
 
     return renderizar_tablas_secretaria()
 
@@ -322,9 +328,9 @@ def borrar_sede():
 @app.route('/borrar_telefono', methods=['POST'])
 def borrar_telefono():
 
-    telefono = request.form['telefono']
+    id = request.form['id']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
-    eliminar_fila(modelo, modelo_esquema, telefono)
+    eliminar_fila(modelo, modelo_esquema, id)
 
     return renderizar_tablas_secretaria()
 

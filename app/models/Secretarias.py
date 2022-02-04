@@ -2,7 +2,8 @@ from . import *
         
 class Secretarias(db.Model):
     __tablename__ = 'secretarias'
-    cedula = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    cedula = db.Column(db.Integer)
     nombre = db.Column(db.String(30))
     sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     cuenta_usuario = db.Column(db.Integer, ForeignKey('cuentas.cedula'))
@@ -13,4 +14,4 @@ class Secretarias(db.Model):
 
 class SecretariasSchema(ma.Schema):
     class Meta:
-        fields = ('cedula', 'nombre','sede_id')
+        fields = ('id','cedula', 'nombre','sede_id')

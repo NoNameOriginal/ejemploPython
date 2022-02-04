@@ -29,7 +29,6 @@
         <input type="int" placeholder="Ingrese su contraseña" id="contraseña" name="contraseña"><br>
         <input type="submit" value="Ingresar">
     </form>
-    <span>{{isLogged}}</span>
     {% if error %}
         <span>{{error}}</span>
     {% endif %}
@@ -37,7 +36,15 @@
     {% if citas %}
     <table class="mdc-data-table__table" aria-label="Dessert calories">
         <thead>
-          <h3>Citas</h3>  
+          <h3>Citas
+            <div class="mdc-touch-target-wrapper">
+              <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="btnAggCita" onclick="actualizar_cita({{item}}, true)">
+                  <div class="mdc-fab__ripple"></div>    
+                  <span class="material-icons mdc-fab__icon">add</span>    
+                  <div class="mdc-fab__touch"></div>    
+                </button>    
+            </div> 
+          </h3>  
           <tr class="mdc-data-table__header-row">
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Fecha</th>
             <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Hora</th>
@@ -57,7 +64,7 @@
 
                     <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
                         <div class="mdc-touch-target-wrapper">
-                          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" onclick="editar_telefono({{item}})">
+                          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" onclick="actualizar_cita({{item}}, false)">
                             <div class="mdc-fab__ripple"></div>
                             <span class="material-icons mdc-fab__icon">edit</span>
                             <div class="mdc-fab__touch"></div>
@@ -84,7 +91,7 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <form name="myForm" action="/actualizar_cita" method="POST">
-        <input type="hidden" id="id" name="id" value="id">
+        <input type="hidden" id="id" name="id">
         <label class="mdc-text-field mdc-text-field--filled">Fecha
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="date" aria-labelledby="my-label-id" id="fecha" name="fecha"
@@ -130,7 +137,8 @@
     
     // Get the button that opens the modal
     var btn = document.getElementsByClassName("myBtn");
-    
+    var btnAggCita = document.getElementById("btnAggCita");
+
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
     
@@ -139,20 +147,26 @@
       modal.style.display = "block";
     }
     
+    btnAggCita.onclick = function() {
+      modal.style.display = "block";
+    }
+
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
       modal.style.display = "none";
     }
     
-    function editar_telefono(data) {
-      console.log(data)
-      document.myForm.id.value = data.id;
+    function actualizar_cita(data, isNew) {
+      if(!isNew){
+        document.myForm.id.value = data.id;
+      }
       document.myForm.fecha.value = data.fecha;
       document.myForm.hora.value = data.hora;
       document.myForm.zona.value = data.zona;
       document.myForm.duracion.value = data.duracion;
       modal.style.display = "block";
     }
+
     window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
