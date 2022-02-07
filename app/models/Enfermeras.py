@@ -2,12 +2,12 @@ from . import *
                
 class Enfermeras(db.Model):
     __tablename__ = 'enfermeras'
-    id = db.Column(db.Integer, primary_key=True)
-    tarjetaProfesional = db.Column(db.Integer)
-    cedula = db.Column(db.Integer)
+    id = db.Column(db.String(30), primary_key=True)
+    tarjetaProfesional = db.Column(db.String(30))
+    cedula = db.Column(db.String(30))
     nombre = db.Column(db.String(30))
     citas = relationship("Citas", backref="enfermeras")
-    sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
+    sede_id = db.Column(db.String(30), ForeignKey('sedes.id'))
     
     def __init__(self, datadict ):
         for key, value in datadict.items():

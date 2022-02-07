@@ -2,7 +2,7 @@ from . import *
 
 class Sedes(db.Model):
     __tablename__ = 'sedes'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(30), primary_key=True)
     centroComercial = db.Column(db.String(70))
     local = db.Column(db.Integer)
     horarioApertura = db.Column(db.Time)
