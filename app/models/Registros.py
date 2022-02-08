@@ -1,4 +1,4 @@
-from . import *   
+from . import *
 
 class Registros(db.Model):
     __tablename__ = 'registros'
@@ -8,7 +8,7 @@ class Registros(db.Model):
     apellidos = db.Column(db.String(45))
     celular = db.Column(db.String(45))
     email = db.Column(db.String(45))
-    
+
     def __init__(self, datadict ):
         for key, value in datadict.items():
             setattr(self, key, value)

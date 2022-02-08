@@ -30,8 +30,8 @@
     <label class="Title-login">Digite su contraseña:</label><br>
     <input type="int" placeholder="Ingrese su contraseña" id="contraseña" name="contraseña"><br>
     <input type="submit" value="Ingresar">
-    <input type="submit" value="Registro" id="btnRegistro" onclick="registrar({{item}})">
-  </form><br>
+  </form>
+  <button id="btnRegistro" onclick="registro()">Registrar</button>
   {% if error %}
   <span>{{error}}</span>
   {% endif %}
@@ -95,7 +95,7 @@
     </tbody>
     {% endif %}
   </table>
-  {% endif %}  
+  {% endif %}
   <!-- The Modal -->
   <div id="myModal" class="modal">
     <!-- Citas-->
@@ -136,51 +136,73 @@
         </div>
       </form>
     </div>
-
+  </div>
     <div id="modalRegistro" class="modal">
-      <!-- REgistro-->
+      <!-- Registro-->
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" id="closeRegistro">&times;</span>
+        <p id="habeasData" style="display:none">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores facilis quisquam, molestiae aliquam, quasi error excepturi qui optio omnis molestias a cumque sint cum ut repudiandae quis est minima. Placeat?</p>
+        <p id="terminosYCondiciones" style="display:none">Holi</p>
         <form name="formRegistro" action="/registrar" method="POST">
           <input type="hidden" id="id" name="id">
-          <label class="mdc-text-field mdc-text-field--filled">Cédula:
+          <label class="mdc-text-field mdc-text-field--filled" id="cedulaLabel">Cédula:
             <span class="mdc-text-field__ripple"></span>
             <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="cedula"
               name="cedula" placeholder="Cédula">
             <span class="mdc-line-ripple"></span>
           </label>
-          <label class="mdc-text-field mdc-text-field--filled">Nombre:
+          <label class="mdc-text-field mdc-text-field--filled" id="nombreLabel">Nombre:
             <span class="mdc-text-field__ripple"></span>
             <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="nombre"
               name="nombre" placeholder="Nombre" required>
             <span class="mdc-line-ripple"></span>
           </label>
-          <label class="mdc-text-field mdc-text-field--filled">Apellidos:
+          <label class="mdc-text-field mdc-text-field--filled" id="apellidosLabel">Apellidos:
             <span class="mdc-text-field__ripple"></span>
             <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="apellidos"
               name="apellidos" placeholder="Apellido" required>
             <span class="mdc-line-ripple"></span>
           </label>
-          <label class="mdc-text-field mdc-text-field--filled">Celular:
+          <label class="mdc-text-field mdc-text-field--filled" id="celularLabel">Celular:
             <span class="mdc-text-field__ripple"></span>
             <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="celular"
               name="celular" placeholder="Celular" required>
             <span class="mdc-line-ripple"></span>
           </label>
-          <label class="mdc-text-field mdc-text-field--filled">Email:
+          <label class="mdc-text-field mdc-text-field--filled" id="emailLabel">Email:
             <span class="mdc-text-field__ripple"></span>
             <input class="mdc-text-field__input" type="email" aria-labelledby="my-label-id" id="email"
               name="email" placeholder="Email" required>
             <span class="mdc-line-ripple"></span>
           </label>
           <div class="mdc-touch-target-wrapper">
-            <button class="mdc-fab mdc-fab--mini mdc-fab--touch">
+            <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonSubmit" style="display:none">
               <div class="mdc-fab__ripple"></div>
               <span class="material-icons mdc-fab__icon">send</span>
               <div class="mdc-fab__touch"></div>
             </button>
           </div>
         </form>
+        <div class="mdc-touch-target-wrapper">
+          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonHabeasData" onclick="verHabeasData()">
+            <div class="mdc-fab__ripple"></div>
+            <span>Ver HabeasData</span>
+            <div class="mdc-fab__touch"></div>
+          </button>
+        </div>
+        <div class="mdc-touch-target-wrapper">
+          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonT&C" onclick="verTyC()" style="display:none">
+            <div class="mdc-fab__ripple"></div>
+            <span>Ver terminos y condiciones</span>
+            <div class="mdc-fab__touch"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalRegistro" class="modal">
+      <!-- Registro-->
+      <div class="modal-content">
       </div>
     </div>
     <!--Borrado de tablas-->
@@ -199,11 +221,10 @@
   // Get the button that opens the modal
   var btn = document.getElementsByClassName("myBtn");
   var btnAggCita = document.getElementById("btnAggCita");
-  var btnRegistro = document.getElementById("btnRegistro");
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-
+  var span = document.getElementsByClassName("close")[1];
+  var spanCloseRegistro = document.getElementById("closeRegistro")
   // When the user clicks the button, open the modal 
   btn.onclick = function () {
     modal.style.display = "block";
@@ -213,13 +234,14 @@
     modal.style.display = "block";
   }
 
-  btnRegistro.onclick = function () {
-    modalRegistro.style.display = "block";
-  }
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = "none";
-    modalRegistro.style.display = "none"
+    modalRegistro.style.display = "none";
+  }
+
+  function registro(){
+    modalRegistro.style.display = "block";
   }
 
   function actualizar_cita(data, isNew) {
@@ -233,6 +255,24 @@
     modal.style.display = "block";
   }
 
+  function verHabeasData(){
+    document.getElementById("cedulaLabel").style.display = "none";
+    document.getElementById("nombreLabel").style.display = "none";
+    document.getElementById("apellidosLabel").style.display = "none";
+    document.getElementById("celularLabel").style.display = "none";
+    document.getElementById("emailLabel").style.display = "none";
+    document.getElementById("botonHabeasData").style.display = "none";
+    document.getElementById("habeasData").style.display = "block";
+    document.getElementById("botonT&C").style.display = "block";
+  }
+
+  function verTyC(){
+    document.getElementById("habeasData").style.display = "none";
+    document.getElementById("botonT&C").style.display = "none";
+    document.getElementById("terminosYCondiciones").style.display = "block";
+    document.getElementById("botonSubmit").style.display = "block";
+  }
+
   function eliminar_cita(id) {
     var form = document.getElementById("borrarCita");
     document.borrarCita.id.value = id;
@@ -241,10 +281,11 @@
   }
 
   window.onclick = function (event) {
+    console.log(event.target);
     if (event.target == modal) {
       modal.style.display = "none";
     }
-  
+
     if (event.target == modalRegistro) {
       modalRegistro.style.display = "none";
     }

@@ -175,7 +175,7 @@ def actualizar_cita_secretaria():
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
     if id == "":
         crear_fila(modelo, modelo_esquema, dict(datos))
-    else:   
+    else:
         actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
@@ -215,7 +215,10 @@ def actualizar_oferta():
     datos["inicio"] = inicio
     datos["fin"] = fin
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(OFERTAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -232,7 +235,10 @@ def actualizar_paciente():
     datos["apellidos"] = apellidos
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(PACIENTES)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -247,7 +253,10 @@ def actualizar_secretaria():
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -265,7 +274,10 @@ def actualizar_sede():
     datos["horarioApertura"] = horarioApertura
     datos["horarioCierre"] = horarioCierre
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SEDES)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -279,9 +291,32 @@ def actualizar_telefono():
     datos["telefono"] = telefono
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(TELEFONOS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
+
+@app.route('/registrar', methods=['POST'])
+def registrar_cliente():
+
+    datos = {}
+    id = request.form['id']
+    cedula = request.form['cedula']
+    nombre = request.form['nombre']
+    apellidos = request.form['apellidos']
+    celular = request.form['celular']
+    email = request.form['email']
+    datos["cedula"] = cedula
+    datos["nombre"] = nombre
+    datos["apellidos"] = apellidos
+    datos["celular"] = celular
+    datos["email"] = email
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(REGISTROS)
+    crear_fila(modelo, modelo_esquema, dict(datos))
+
+    return render_template('clientes.html')
 
 @app.route('/borrar_cita', methods=['POST'])
 def borrar_cita():
