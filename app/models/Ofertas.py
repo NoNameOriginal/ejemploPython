@@ -2,14 +2,14 @@ from . import *
                        
 class Ofertas(db.Model):
     __tablename__ = 'ofertas'
-    id = db.Column(db.String(30), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     precio = db.Column(db.Float)
     zona = db.Column(db.String(30))
     inicio = db.Column(db.Date)
     fin = db.Column(db.Date)
-    paciente_cedula = db.Column(db.String(30), ForeignKey('pacientes.cedula'))
-    citas_id = db.Column(db.String(30), ForeignKey('citas.id'))
-    sede_id = db.Column(db.String(30), ForeignKey('sedes.id'))
+    paciente_id = db.Column(db.Integer, ForeignKey('pacientes.id'))
+    citas_id = db.Column(db.Integer, ForeignKey('citas.id'))
+    sede_id = db.Column(db.Integer, ForeignKey('sedes.id'))
     
     def __init__(self, datadict ):
         for key, value in datadict.items():

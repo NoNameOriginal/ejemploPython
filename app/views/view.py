@@ -1,7 +1,7 @@
 from pickletools import read_uint1
 from .. import db, app
 from flask import render_template, request, jsonify
-from ..models import Citas, Cuentas, Enfermeras, Ofertas, Pacientes, Secretarias, Sedes, Telefonos
+from ..models import Citas, Cuentas, Enfermeras, Ofertas, Pacientes, Secretarias, Sedes, Telefonos,Registros
 from .ManejadorDeBaseDeDatos import *
 
 CITAS="CITAS"
@@ -9,6 +9,7 @@ CUENTAS="CUENTAS"
 ENFERMERAS="ENFERMERAS"
 OFERTAS="OFERTAS"
 PACIENTES="PACIENTES"
+REGISTROS="REGISTROS"
 SECRETARIAS="SECRETARIAS"
 SEDES="SEDES"
 TELEFONOS="TELEFONOS"
@@ -39,6 +40,10 @@ def obtener_modelo(tabla):
         modelo = Pacientes.Pacientes
         modelo_esquema = Pacientes.PacientesSchema()
         modelos_esquema = Pacientes.PacientesSchema(many=True)
+    if(tabla==REGISTROS):
+        modelo = Registros.Registros
+        modelo_esquema = Registros.RegistrosSchema()
+        modelos_esquema = Registros.RegistrosSchema(many=True)
     if(tabla==SECRETARIAS):
         modelo = Secretarias.Secretarias
         modelo_esquema = Secretarias.SecretariasSchema()
@@ -131,7 +136,7 @@ def renderizar_tablas_clientes():
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
     citas = obtener_filas(modelo, modelos_esquemas)
     return render_template('clientes.html', 
-                            citas=citas)
+                            citas=citas, isLogged=True)
     
 @app.route('/actualizar_cita', methods=['POST'])
 def actualizar_cita():
@@ -168,7 +173,10 @@ def actualizar_cita_secretaria():
     datos["zona"] = zona
     datos["duracion"] = duracion
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:   
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -182,10 +190,14 @@ def actualizar_enfermera():
     nombre = request.form['nombre']
     sede_id = request.form['sede_id']
     datos["tarjetaProfesional"] = tarjetaProfesional
+    datos["cedula"] = cedula
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(ENFERMERAS)
-    actualizar_fila(modelo, modelo_esquema, dict(datos), id)
+    if id == "":
+        crear_fila(modelo, modelo_esquema, dict(datos))
+    else:
+        actualizar_fila(modelo, modelo_esquema, dict(datos), id)
 
     return renderizar_tablas_secretaria()
 
@@ -273,6 +285,15 @@ def actualizar_telefono():
 
 @app.route('/borrar_cita', methods=['POST'])
 def borrar_cita():
+
+    id = request.form['id']
+    modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
+    eliminar_fila(modelo, modelo_esquema, id)
+
+    return renderizar_tablas_clientes()
+
+@app.route('/borrar_cita_secretaria', methods=['POST'])
+def borrar_cita_secretaria():
 
     id = request.form['id']
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
