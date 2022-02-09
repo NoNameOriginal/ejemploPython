@@ -18,4 +18,4 @@ class Citas(db.Model):
 
 class CitasSchema(ma.Schema):
     class Meta:
-        fields = ('id','fecha', 'hora', 'zona', 'duracion')
+        fields = ('id','fecha', 'hora', 'zona')

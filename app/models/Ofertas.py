@@ -17,4 +17,4 @@ class Ofertas(db.Model):
 
 class OfertasSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'precio', 'zona', 'inicio', 'fin','paciente_cedula','citas_id', 'sede_id')
+        fields = ('id', 'precio', 'zona', 'inicio', 'fin')

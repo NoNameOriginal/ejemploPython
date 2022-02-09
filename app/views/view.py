@@ -231,6 +231,7 @@ def actualizar_paciente():
     nombre = request.form['nombre']
     apellidos = request.form['apellidos']
     sede_id = request.form['sede_id']
+    datos["cedula"] = cedula
     datos["nombre"] = nombre
     datos["apellidos"] = apellidos
     datos["sede_id"] = sede_id
@@ -250,6 +251,7 @@ def actualizar_secretaria():
     cedula = request.form['cedula']
     nombre = request.form['nombre']
     sede_id = request.form['sede_id']
+    datos["cedula"] = cedula
     datos["nombre"] = nombre
     datos["sede_id"] = sede_id
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(SECRETARIAS)

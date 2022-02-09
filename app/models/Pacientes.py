@@ -17,4 +17,4 @@ class Pacientes(db.Model):
 
 class PacientesSchema(ma.Schema):
     class Meta:
-        fields = ('id','cedula', 'nombre', 'apellidos','sede_id')
+        fields = ('id','cedula', 'nombre', 'apellidos', 'sede_id')

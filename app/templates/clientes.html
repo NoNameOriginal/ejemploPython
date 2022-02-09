@@ -26,9 +26,9 @@
   <form action="/login_cliente" method="POST">
     <h3>Inicio de sesión</h3>
     <label class="Title-login">Digite su cédula: </label><br>
-    <input type="int" placeholder="Ingrese su cedula" id="cedula" name="cedula"><br>
+    <input type="int" placeholder="Ingrese su cedula" id="cedula" name="cedula" required><br>
     <label class="Title-login">Digite su contraseña:</label><br>
-    <input type="int" placeholder="Ingrese su contraseña" id="contraseña" name="contraseña"><br>
+    <input type="int" placeholder="Ingrese su contraseña" id="contraseña" name="contraseña" required><br>
     <input type="submit" value="Ingresar">
   </form>
   <button id="btnRegistro" onclick="registro()">Registrar</button>
@@ -55,8 +55,6 @@
         <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">
           Zona</th>
         <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">
-          Duración</th>
-        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">
           Editar</th>
         <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">
           Eliminar</th>
@@ -70,8 +68,7 @@
         <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.fecha}}</td>
         <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.hora}}</td>
         <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.zona}}</td>
-        <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{{item.duracion}}</td>
-
+        
         <td class="mdc-data-table__cell mdc-data-table__cell--numeric">
           <div class="mdc-touch-target-wrapper">
             <button class="mdc-fab mdc-fab--mini mdc-fab--touch" onclick="actualizar_cita({{item}}, false)">
@@ -106,25 +103,25 @@
         <label class="mdc-text-field mdc-text-field--filled">Fecha
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="date" aria-labelledby="my-label-id" id="fecha" name="fecha"
-            placeholder="Fecha">
+            placeholder="Fecha" required>
           <span class="mdc-line-ripple"></span>
         </label>
         <label class="mdc-text-field mdc-text-field--filled">Hora
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="time" aria-labelledby="my-label-id" id="hora" name="hora"
-            placeholder="Hora">
+            placeholder="Hora" required>
           <span class="mdc-line-ripple"></span>
         </label>
         <label class="mdc-text-field mdc-text-field--filled">Zona
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="zona" name="zona"
-            placeholder="Zona">
+            placeholder="Zona" required>
           <span class="mdc-line-ripple"></span>
         </label>
         <label class="mdc-text-field mdc-text-field--filled">Duración
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="time" aria-labelledby="my-label-id" id="duracion" name="duracion"
-            placeholder="Fin">
+            placeholder="Duración" required>
           <span class="mdc-line-ripple"></span>
         </label>
         <div class="mdc-touch-target-wrapper">
@@ -137,78 +134,119 @@
       </form>
     </div>
   </div>
-    <div id="modalRegistro" class="modal">
-      <!-- Registro-->
-      <div class="modal-content">
-        <span class="close" id="closeRegistro">&times;</span>
-        <p id="habeasData" style="display:none">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores facilis quisquam, molestiae aliquam, quasi error excepturi qui optio omnis molestias a cumque sint cum ut repudiandae quis est minima. Placeat?</p>
-        <p id="terminosYCondiciones" style="display:none">Holi</p>
-        <form name="formRegistro" action="/registrar" method="POST">
-          <input type="hidden" id="id" name="id">
-          <label class="mdc-text-field mdc-text-field--filled" id="cedulaLabel">Cédula:
-            <span class="mdc-text-field__ripple"></span>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="cedula"
-              name="cedula" placeholder="Cédula">
-            <span class="mdc-line-ripple"></span>
-          </label>
-          <label class="mdc-text-field mdc-text-field--filled" id="nombreLabel">Nombre:
-            <span class="mdc-text-field__ripple"></span>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="nombre"
-              name="nombre" placeholder="Nombre" required>
-            <span class="mdc-line-ripple"></span>
-          </label>
-          <label class="mdc-text-field mdc-text-field--filled" id="apellidosLabel">Apellidos:
-            <span class="mdc-text-field__ripple"></span>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="apellidos"
-              name="apellidos" placeholder="Apellido" required>
-            <span class="mdc-line-ripple"></span>
-          </label>
-          <label class="mdc-text-field mdc-text-field--filled" id="celularLabel">Celular:
-            <span class="mdc-text-field__ripple"></span>
-            <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="celular"
-              name="celular" placeholder="Celular" required>
-            <span class="mdc-line-ripple"></span>
-          </label>
-          <label class="mdc-text-field mdc-text-field--filled" id="emailLabel">Email:
-            <span class="mdc-text-field__ripple"></span>
-            <input class="mdc-text-field__input" type="email" aria-labelledby="my-label-id" id="email"
-              name="email" placeholder="Email" required>
-            <span class="mdc-line-ripple"></span>
-          </label>
-          <div class="mdc-touch-target-wrapper">
-            <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonSubmit" style="display:none">
-              <div class="mdc-fab__ripple"></div>
-              <span class="material-icons mdc-fab__icon">send</span>
-              <div class="mdc-fab__touch"></div>
-            </button>
-          </div>
-        </form>
-        <div class="mdc-touch-target-wrapper">
-          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonHabeasData" onclick="verHabeasData()">
-            <div class="mdc-fab__ripple"></div>
-            <span>Ver HabeasData</span>
-            <div class="mdc-fab__touch"></div>
-          </button>
-        </div>
-        <div class="mdc-touch-target-wrapper">
-          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonT&C" onclick="verTyC()" style="display:none">
-            <div class="mdc-fab__ripple"></div>
-            <span>Ver terminos y condiciones</span>
-            <div class="mdc-fab__touch"></div>
-          </button>
-        </div>
-      </div>
-    </div>
+  <div id="modalRegistro" class="modal">
+    <!-- Registro-->
+    <div class="modal-content">
+      <span class="close" id="closeRegistro">&times;</span>
+      <span id="habeasData" style="display:none">
+        <h2>Habeas data</h2>
+        <p>A través de la Ley 1581 de 2012 y el Decreto 1377 de 2013, se desarrolla el derecho constitucional que tienen
+          todas las personas a conocer, suprimir, actualizar y rectificar todo tipo de datos personales recolectados,
+          almacenados o que hayan sido objeto de tratamiento en bases de datos en las entidades del públicas y privadas.
 
-    <div id="modalRegistro" class="modal">
-      <!-- Registro-->
-      <div class="modal-content">
+          La Corte Constitucional lo definió como el derecho que otorga la facultad al titular de datos personales de
+          exigir de las administradoras de esos datos el acceso, inclusión, exclusión, corrección, adición,
+          actualización y certificación de los datos, así como la limitación en las posibilidades de su divulgación,
+          publicación o cesión, de conformidad con los principios que regulan el proceso de administración de datos
+          personales. Asimismo, ha señalado que este derecho tiene una naturaleza autónoma que lo diferencia de otras
+          garantías con las que está en permanente relación, como los derechos a la intimidad y a la información.
+          En atención a la mencionada Ley se estableció el Registro Nacional de Bases de Datos - RNBD, el cual es un
+          directorio público de las bases de datos con información personal sujetas a tratamiento que operan en el país,
+          acorde con lo establecido en la Ley 1581 de 2012.</p>
+      </span>
+      <span id="terminosYCondiciones" style="display:none">
+        <h2>Términos y condiciones</h2>
+        <p>Exención de responsabilidad de atención médica.
+          El contenido, los productos y los servicios que aquí se ofrecen sirven para informar a los consumidores sobre
+          temas médicos y de atención de la salud que pueden afectar su vida cotidiana. Ninguna parte del contenido, los
+          productos o los servicios debe considerarse o utilizarse como sustituto del asesoramiento médico, el
+          diagnóstico o el tratamiento. Este sitio y sus servicios no constituyen la práctica de tratamiento,
+          diagnóstico o asesoramiento sobre atención médica por parte de un médico, personal de enfermería u otro
+          profesional. Siempre debes hablar con tu proveedor de atención médica para recibir diagnóstico y tratamiento,
+          incluidas tus necesidades médicas específicas. Ninguno de los productos o servicios ofrecidos a través de este
+          sitio web representa o garantiza que algún producto o servicio en particular es seguro, apropiado o efectivo
+          para ti. Recomendamos a los usuarios solicitar siempre asesoramiento de un médico u otro proveedor de atención
+          médica calificado si tienen preguntas sobre afecciones médicas o la salud personal. Si sospechas que padeces
+          una enfermedad o un problema de salud, comunícate de inmediato con un profesional de atención médica
+          calificado. Si te encuentras en los Colombia y sufres una emergencia médica, llama al 123 o llama para
+          pedir asistencia médica de emergencia desde el teléfono más cercano.
+
+          Términos de uso. 
+          El uso del Sitio está sujeto a los siguientes términos de uso. Beauty puede modificar estos términos y
+          condiciones en cualquier momento, y las modificaciones entrarán en vigencia inmediatamente después de la
+          publicación de los términos y condiciones modificados en el Sitio de Beauty. Tú aceptas revisar el
+          acuerdo periódicamente para estar al tanto de dichas modificaciones, y tu acceso o uso del servicio
+          constituyen la aceptación del acuerdo tal como aparece al momento del acceso o del uso. De vez en cuando, Beauty
+          puede ofrecer a los visitantes del sitio web la oportunidad de participar en servicios o funciones
+          adicionales a través del Sitio de Beauty. Es posible que tengas que participar en acuerdos o realizar
+          autorizaciones adicionales antes de poder acceder a dichos servicios o funciones.</p>
+      </span>
+      <form name="formRegistro" action="/registrar" method="POST">
+        <input type="hidden" id="id" name="id">
+        <label class="mdc-text-field mdc-text-field--filled" id="cedulaLabel">Cédula:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="cedula" name="cedula"
+            placeholder="Cédula">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" id="nombreLabel">Nombre:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="nombre" name="nombre"
+            placeholder="Nombre" required>
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" id="apellidosLabel">Apellidos:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="apellidos" name="apellidos"
+            placeholder="Apellido" required>
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" id="celularLabel">Celular:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="celular" name="celular"
+            placeholder="Celular" required>
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" id="emailLabel">Email:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="email" aria-labelledby="my-label-id" id="email" name="email"
+            placeholder="Email" required>
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <div class="mdc-touch-target-wrapper">
+          <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonSubmit" style="display:none">
+            <div class="mdc-fab__ripple"></div>
+            <span class="material-icons mdc-fab__icon">send</span>
+            <div class="mdc-fab__touch"></div>
+          </button>
+        </div>
+      </form>
+      <div class="mdc-touch-target-wrapper">
+        <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonHabeasData" onclick="verHabeasData()">
+          <div class="mdc-fab__ripple"></div>
+          <span class="material-icons mdc-fab__icon">send</span>
+          <div class="mdc-fab__touch"></div>
+        </button>
+      </div>
+      <div class="mdc-touch-target-wrapper">
+        <button class="mdc-fab mdc-fab--mini mdc-fab--touch" id="botonT&C" onclick="verTyC()" style="display:none">
+          <div class="mdc-fab__ripple"></div>
+          <span class="material-icons mdc-fab__icon">send</span>
+          <div class="mdc-fab__touch"></div>
+        </button>
       </div>
     </div>
-    <!--Borrado de tablas-->
-    <form action="/borrar_cita" method="POST" id="borrarCita" name="borrarCita">
-      <input type="hidden" name="id" id="id">
-    </form>
+  </div>
+
+  <div id="modalRegistro" class="modal">
+    <!-- Registro-->
+    <div class="modal-content">
+    </div>
+  </div>
+  <!--Borrado de tablas-->
+  <form action="/borrar_cita" method="POST" id="borrarCita" name="borrarCita">
+    <input type="hidden" name="id" id="id">
+  </form>
 </body>
 
 </html>
@@ -240,7 +278,7 @@
     modalRegistro.style.display = "none";
   }
 
-  function registro(){
+  function registro() {
     modalRegistro.style.display = "block";
   }
 
@@ -255,7 +293,7 @@
     modal.style.display = "block";
   }
 
-  function verHabeasData(){
+  function verHabeasData() {
     document.getElementById("cedulaLabel").style.display = "none";
     document.getElementById("nombreLabel").style.display = "none";
     document.getElementById("apellidosLabel").style.display = "none";
@@ -266,7 +304,7 @@
     document.getElementById("botonT&C").style.display = "block";
   }
 
-  function verTyC(){
+  function verTyC() {
     document.getElementById("habeasData").style.display = "none";
     document.getElementById("botonT&C").style.display = "none";
     document.getElementById("terminosYCondiciones").style.display = "block";
