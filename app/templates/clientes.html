@@ -118,12 +118,6 @@
             placeholder="Zona" required>
           <span class="mdc-line-ripple"></span>
         </label>
-        <label class="mdc-text-field mdc-text-field--filled">Duración
-          <span class="mdc-text-field__ripple"></span>
-          <input class="mdc-text-field__input" type="time" aria-labelledby="my-label-id" id="duracion" name="duracion"
-            placeholder="Duración" required>
-          <span class="mdc-line-ripple"></span>
-        </label>
         <div class="mdc-touch-target-wrapper">
           <button class="mdc-fab mdc-fab--mini mdc-fab--touch">
             <div class="mdc-fab__ripple"></div>
@@ -199,6 +193,12 @@
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" id="apellidos" name="apellidos"
             placeholder="Apellido" required>
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <label class="mdc-text-field mdc-text-field--filled" id="contrasegnaLabel">Contraseña:
+          <span class="mdc-text-field__ripple"></span>
+          <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id" id="contrasegna" name="contrasegna"
+            placeholder="Contrasena" required>
           <span class="mdc-line-ripple"></span>
         </label>
         <label class="mdc-text-field mdc-text-field--filled" id="celularLabel">Celular:
@@ -297,6 +297,7 @@
     document.getElementById("cedulaLabel").style.display = "none";
     document.getElementById("nombreLabel").style.display = "none";
     document.getElementById("apellidosLabel").style.display = "none";
+    document.getElementById("contrasegnaLabel").style.display = "none";
     document.getElementById("celularLabel").style.display = "none";
     document.getElementById("emailLabel").style.display = "none";
     document.getElementById("botonHabeasData").style.display = "none";

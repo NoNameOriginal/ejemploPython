@@ -6,6 +6,7 @@ class Registros(db.Model):
     cedula = db.Column(db.String(30))
     nombre = db.Column(db.String(30))
     apellidos = db.Column(db.String(45))
+    contrasegna = db.Column(db.Integer)
     celular = db.Column(db.String(45))
     email = db.Column(db.String(45))
 
@@ -15,4 +16,4 @@ class Registros(db.Model):
 
 class RegistrosSchema(ma.Schema):
     class Meta:
-        fields = ('id','cedula', 'nombre', 'apellidos','celular', 'email')
+        fields = ('id','cedula', 'nombre', 'apellidos','celular', 'email', 'contrasegna')

@@ -6,7 +6,6 @@ class Citas(db.Model):
     fecha = db.Column(db.Date)
     hora = db.Column(db.Time)
     zona = db.Column(db.String(30))
-    duracion = db.Column(db.Time)
     oferta = relationship("Ofertas", backref="citas")
     enfermeras_id = db.Column(db.Integer, ForeignKey('enfermeras.id'))
     paciente_id = db.Column(db.Integer, ForeignKey('pacientes.id'))

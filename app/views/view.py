@@ -146,11 +146,9 @@ def actualizar_cita():
     fecha = request.form['fecha']
     hora = request.form['hora']
     zona = request.form['zona']
-    duracion = request.form['duracion']
     datos["fecha"] = fecha
     datos["hora"] = hora
     datos["zona"] = zona
-    datos["duracion"] = duracion
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
     if id == "":
         crear_fila(modelo, modelo_esquema, dict(datos))
@@ -167,11 +165,9 @@ def actualizar_cita_secretaria():
     fecha = request.form['fecha']
     hora = request.form['hora']
     zona = request.form['zona']
-    duracion = request.form['duracion']
     datos["fecha"] = fecha
     datos["hora"] = hora
     datos["zona"] = zona
-    datos["duracion"] = duracion
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(CITAS)
     if id == "":
         crear_fila(modelo, modelo_esquema, dict(datos))
@@ -308,11 +304,13 @@ def registrar_cliente():
     cedula = request.form['cedula']
     nombre = request.form['nombre']
     apellidos = request.form['apellidos']
+    contrasegna = request.form['contrasegna']
     celular = request.form['celular']
     email = request.form['email']
     datos["cedula"] = cedula
     datos["nombre"] = nombre
     datos["apellidos"] = apellidos
+    datos["contrasegna"] = contrasegna
     datos["celular"] = celular
     datos["email"] = email
     modelo, modelo_esquema, modelos_esquemas = obtener_modelo(REGISTROS)
